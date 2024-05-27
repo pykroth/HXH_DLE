@@ -5,6 +5,8 @@
 
 
 let answer;
+let clickSearch = true;
+let searchText = '';
 
 let guessedRight = false;
 let data = [
@@ -27,6 +29,28 @@ let data = [
         Name: "Uvo",
         Click: false,
         Nen: "Enhancer",
+        correctName: false,
+        correctNen: false
+    },
+    {
+        Name: "Kurapika Kurta",
+        Click: false,
+        Nen: "Manipulator, Special",
+        correctName: false,
+        correctNen: false
+
+    },
+    {
+        Name: "Leorio",
+        Click: false,
+        Nen: "Emission",
+        correctName: false,
+        correctNen: false
+    },
+    {
+        Name: "Netero",
+        Click: false,
+        Nen: "Emission",
         correctName: false,
         correctNen: false
     }
@@ -83,6 +107,7 @@ function updateSearchResults(results: any[]) {
 function Guess(result: any[])
 {
     result.Click=true;
+    searchText='';
     if(result.Click==true)
     {
         console.log("THIS IS TRUE");
@@ -91,6 +116,7 @@ function Guess(result: any[])
     if(result == answer)
     {
         guessedRight = true;
+        clickSearch = false;
     }
     const query = event.target.value.toLowerCase();
     const results = data.filter(item => {
@@ -143,11 +169,13 @@ for(let i = 0; i<data.length; i++)
         {/if}
         <!--Searchbar and list of results-->
         <div class="fixed top-1/4 left-1/2 transform -translate-x-1/2">
-        <input type="text" id="searchInput" placeholder="Search..." class="mx-auto my-auto text-black"  on:input={filterData}>
+        <input bind:value={searchText} type="text" id="searchInput" placeholder="Search..." class="mx-auto my-auto text-black {clickSearch ? '':'pointer-events-none'}"  on:input={filterData}>
         {#if filterData.length > 0}
         <ul>
             {#each filteredData as item}
+            <li>
             <button class="border border-black border-1 text-center"  on:click={() =>Guess(item)}>{item.Name}</button>
+        </li>
         {/each}
         
         </ul>
