@@ -7,6 +7,9 @@
 let answer;
 let clickSearch = true;
 let searchText = '';
+let guessCount = 0;
+
+let hintText="Location: 3 More Tries Necessary"
 
 let guessedRight = false;
 let data = [
@@ -15,7 +18,8 @@ let data = [
         Click: false,
         Nen: "Enhancer",
         correctName: false,
-        correctNen: false
+        correctNen: false,
+        DebutArc: "Hunter Exam"
 
     },
     {
@@ -23,21 +27,24 @@ let data = [
         Click: false,
         Nen: "Transmutor",
         correctName: false,
-        correctNen: false
+        correctNen: false,
+        DebutArc: "Hunter Exam"
     },
     {
         Name: "Uvo",
         Click: false,
         Nen: "Enhancer",
         correctName: false,
-        correctNen: false
+        correctNen: false,
+        DebutArc: "Phantom Troupe Arc"
     },
     {
         Name: "Kurapika Kurta",
         Click: false,
-        Nen: "Manipulator, Special",
+        Nen: "Conjuration, Special",
         correctName: false,
-        correctNen: false
+        correctNen: false,
+        DebutArc: "Hunter Exam"
 
     },
     {
@@ -45,15 +52,107 @@ let data = [
         Click: false,
         Nen: "Emission",
         correctName: false,
-        correctNen: false
+        correctNen: false,
+        DebutArc: "Hunter Exam"
     },
     {
         Name: "Netero",
         Click: false,
         Nen: "Emission",
         correctName: false,
-        correctNen: false
+        correctNen: false,
+        DebutArc: "Hunter Exam"
+    },
+    {
+        Name: "Hisoka",
+        Click: false,
+        Nen: "Transmutor",
+        correctName: false,
+        correctNen: false,
+        DebutArc: "Hunter Exam"
+    },
+    {
+        Name: "Illumi",
+        Click: false,
+        Nen: "Manipulator",
+        correctName: false,
+        correctNen: false,
+        DebutArc: "Hunter Exam"
+    },
+    {
+        Name: "Pokkle",
+        Click: false,
+        Nen: "Emission",
+        correctName: false,
+        correctNen: false,
+        DebutArc: "Hunter Exam"
+    },
+    {
+        Name: "Hanzo",
+        Click: false,
+        Nen: "Unknown",
+        correctName: false,
+        correctNen: false,
+        DebutArc: "Hunter Exam"
+    },
+    {
+        Name: "Ponzu",
+        Click: false,
+        Nen: "Manipulator",
+        correctName: false,
+        correctNen: false,
+        DebutArc: "Hunter Exam"
+    },
+    {
+        Name: "Mito",
+        Click: false,
+        Nen: "None",
+        correctName: false,
+        correctNen: false,
+        DebutArc: "Hunter Exam"
+    },
+    {
+        Name: "Meruem",
+        Click: false,
+        Nen: "Special",
+        correctName: false,
+        correctNen: false,
+        DebutArc: "Chimera Ant Arc"
+    },
+    {
+        Name: "Pitou",
+        Click: false,
+        Nen: "Special",
+        correctName: false,
+        correctNen: false,
+        DebutArc: "Chimera Ant Arc"
+    },
+    {
+        Name: "Shiapouf",
+        Click: false,
+        Nen: "Manipulator",
+        correctName: false,
+        correctNen: false,
+        DebutArc: "Chimera Ant Arc"
+    },
+    {
+        Name: "Menthuthuyoupi",
+        Click: false,
+        Nen: "Transmutor",
+        correctName: false,
+        correctNen: false,
+        DebutArc: "Chimera Ant Arc"
+    },
+    {
+        Name: "Kite",
+        Click: false,
+        Nen: "Conjuration",
+        correctName: false,
+        correctNen: false,
+        DebutArc: "Chimera Ant Arc"
     }
+    
+
 ];
 
 let filteredData: any[] = [];
@@ -108,6 +207,14 @@ function Guess(result: any[])
 {
     result.Click=true;
     searchText='';
+    guessCount++;
+    let hintCounter=3-guessCount;
+    if(hintCounter>0)
+    hintText="Location: " + hintCounter + " more tries necessary";
+    else
+    {
+        hintText="Location: (Click to use)"
+    }
     if(result.Click==true)
     {
         console.log("THIS IS TRUE");
@@ -150,6 +257,15 @@ for(let i = 0; i<data.length; i++)
     }
 }
 
+function revealLocation()
+{
+    if(3-guessCount <=0)
+    {
+        hintText=answer.DebutArc;
+    }
+
+}
+
 
  
 </script>
@@ -162,7 +278,12 @@ for(let i = 0; i<data.length; i++)
 			<button id="Title-Screen"> HXH DLE</button>
         </a>
         </div>
-
+        <!--Hints-->
+        <div class="transform translate-x-1/3 translate-y-14">
+            <!-- 1/4 Left -->
+            <button class="border border-black" on:click={revealLocation}>{hintText}</button>
+        </div>
+        
         <!--Code for guessing Right-->
         {#if guessedRight}
         <div class="fixed -top-1/8 left-1/2 transform -translate-x-1/2">You Guessed Right</div>
