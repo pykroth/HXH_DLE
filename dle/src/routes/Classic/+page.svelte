@@ -2,14 +2,19 @@
 
 <script lang="ts">
     import { Result } from "postcss";
+ import { fade } from 'svelte/transition';
 
+  // Function to determine if an item is newly added
+  function isNewItem(index) {
+    return index >= guessedData.length - 1;
+  }
 
 let answer;
 let clickSearch = true;
 let searchText = '';
 let guessCount = 0;
 
-let hintText="Location: 3 More Tries Necessary"
+let hintText="Debut Arc: 3 More Tries Necessary"
 
 let guessedRight = false;
 let data = [
@@ -306,23 +311,16 @@ function revealLocation()
     </div>
 
 </div>  
-<!--Display Guesses-->
 <div class="fixed top-3/4 left-1/2 transform -translate-y-1/4 -translate-x-1/2">
-    {#each guessedData as item}
-    <table class="w-full">
-        <tr class="self-center">
-            <td class="w-1/2 {item.correctName ? 'bg-green-200' : 'bg-red-300'}">{item.Name}</td>
-            <td class="w-1/2 {item.correctNen ? 'bg-green-200' : 'bg-red-300'}">{item.Nen}</td>
-        </tr>
+  {#each guessedData as item, index}
+    <table class="w-full" transition:fade="{{ duration: 500 }}">
+    <tr class="self-center" in:fade="{{ duration: 500, delay: index * 100 }}">
+        <td class="w-1/2 {item.correctName ? 'bg-green-200' : 'bg-red-300'}">{item.Name}</td>
+        <td class="w-1/2 {item.correctNen ? 'bg-green-200' : 'bg-red-300'}">{item.Nen}</td>
+      </tr>
     </table>
-{/each}
-
-       
-      
-        
-     
-    
-    </div>
+  {/each}
+</div>
 
     
 </main>
