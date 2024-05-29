@@ -25,7 +25,7 @@
 
 <main>
 	<!--The very top of the screen which leads to home-page-->
-	<div class="bg-gray-500 justify-center h-screen ">
+	<div class="bg-gray-500 justify-center h-screen w-full">
 		<div class="text-center text-white border border-black bg-black" >
 			<button id="Title-Screen" on:click={clickHomePage}>HXH DLE</button>
 			<div class="fixed top-1/4 left-1/2 transform -translate-x-1/2">
@@ -40,10 +40,7 @@
 		</div>
 		
 	</div>
-	<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-        <input type="text" id="searchInput" placeholder="Search..." class="mx-auto my-auto">
-    </div>
-
+	
 </main>
 
 

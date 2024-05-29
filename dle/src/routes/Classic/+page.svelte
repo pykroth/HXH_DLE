@@ -181,12 +181,10 @@ function pickChar()
 function updateSearchResults(results: any[]) {
     filteredData = results;
     const guessedResults = data.filter(item =>{return item.Click === true})
-    updatedGuesses(guessedResults);
+    
   }
 
-  function updatedGuesses(results: any[]) {
-    guessedData = results;
-  }
+
 
   function filterData(event) {
     
@@ -194,14 +192,14 @@ function updateSearchResults(results: any[]) {
     const results = data.filter(item => {
         return item.Name.trim().toLowerCase().startsWith(query) && !item.Click;
     });
-    const guessedResults = data.filter(item =>{return item.Click === true})
+    
     if (query === "") {
       updateSearchResults([]); // Clear filteredData if query is empty
     }
     else
     {
         updateSearchResults(results);
-        updatedGuesses(guessedResults);
+        
     }
     
 
@@ -213,12 +211,14 @@ function Guess(result: any[])
     result.Click=true;
     searchText='';
     guessCount++;
+   // guessedData.push(result);
+    guessedData = [...guessedData, result];
     let hintCounter=3-guessCount;
     if(hintCounter>0)
-    hintText="Location: " + hintCounter + " more tries necessary";
+    hintText="Debut Arc: " + hintCounter + " more tries necessary";
     else
     {
-        hintText="Location: (Click to use)"
+        hintText="Debut Arc: (Click to use)"
     }
     if(result.Click==true)
     {
@@ -234,7 +234,7 @@ function Guess(result: any[])
     const results = data.filter(item => {
         return item.Name.toLowerCase().includes(query) && (item.Click === false);
     });
-    const guessedResults = data.filter(item =>{return item.Click === true})
+   
 
 
     if (query === "") {
@@ -243,7 +243,7 @@ function Guess(result: any[])
     else
     {
         updateSearchResults(results);
-        updatedGuesses(guessedResults);
+       
     }
    
    
@@ -275,20 +275,22 @@ function revealLocation()
  
 </script>
 
-<main>
+<main class="main" id="main">
     
-    <div class="bg-gray-500 justify-center h-screen ">
+    <div class="bg-gray-500 justify-center h-screen w-full">
+
 		<div class="text-center text-white border border-black bg-black" >
             <a href="/">
 			<button id="Title-Screen"> HXH DLE</button>
         </a>
         </div>
         <!--Hints-->
-        <div class="transform translate-x-1/3 translate-y-14">
-            <!-- 1/4 Left -->
-            <button class="border border-black" on:click={revealLocation}>{hintText}</button>
+        <div class="flex justify-center">
+            <button class="border border-black ml-15 mt-12" on:click={revealLocation}> <!-- Adjust the ml-* value as needed -->
+                {hintText}
+            </button>
         </div>
-        
+         
         <!--Code for guessing Right-->
         {#if guessedRight}
         <div class="fixed -top-1/8 left-1/2 transform -translate-x-1/2">You Guessed Right</div>
@@ -312,17 +314,53 @@ function revealLocation()
 
 </div>  
 <div class="fixed top-3/4 left-1/2 transform -translate-y-1/4 -translate-x-1/2">
-  {#each guessedData as item, index}
-    <table class="w-full" transition:fade="{{ duration: 500 }}">
-    <tr class="self-center" in:fade="{{ duration: 500, delay: index * 100 }}">
+    {#each [...guessedData] as item, index}
+    <table class="w-full table-fixed">
+      <tr class="self-center" in:fade="{{ duration: 500, delay: (guessedData.length - index - 1) * 500 }}">
         <td class="w-1/2 {item.correctName ? 'bg-green-200' : 'bg-red-300'}">{item.Name}</td>
         <td class="w-1/2 {item.correctNen ? 'bg-green-200' : 'bg-red-300'}">{item.Nen}</td>
       </tr>
     </table>
   {/each}
+  
 </div>
 
+<footer class="bg-black">
+    <p class="text-white  text-xs">Jordan Pho</p>
+    <p class="text-white text-xs">@2024</p>
+</footer>
     
 </main>
 
 
+<style lang="postcss">
+    :root {
+  /* Scrollbar width */
+  --scrollbar-width: 10px;
+  /* Scrollbar track color */
+  --scrollbar-track-color: #f0f0f0;
+  /* Scrollbar thumb color */
+  --scrollbar-thumb-color: #888;
+}
+
+/* Style the scrollbar */
+:root::-webkit-scrollbar {
+
+  width: var(--scrollbar-width);
+}
+
+/* Style the scrollbar track */
+:root::-webkit-scrollbar-track {
+    
+  background-color: var(--scrollbar-track-color);
+}
+
+/* Style the scrollbar thumb */
+:root::-webkit-scrollbar-thumb {
+    
+  background-color: var(--scrollbar-thumb-color);
+}
+
+
+
+</style>
