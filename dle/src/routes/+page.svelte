@@ -1,58 +1,44 @@
 <script lang="ts">
 	import './styles.css';
-	let tempVar=false;
-	function clickHomePage()
-	{
-		tempVar=true;
+	let tempVar = false;
+	function clickHomePage() {
+		tempVar = true;
 		console.log(tempVar);
 	}
 
-
 	//For different parts of website 
 	let screenlinks = [
-        {
-            "name": "Home",
-            "link": "/home"
-        },
-        {
-            "name": "Classic",
-            "link": "/Classic"
-        }
-    ]
-  </script>
+		{
+			"name": "Home",
+			"link": "/home"
+		},
+		{
+			"name": "Classic",
+			"link": "/Classic"
+		}
+	];
+</script>
 
-
-
-<main>
-	<!--The very top of the screen which leads to home-page-->
-	<div class="bg-gray-500 justify-center h-screen w-full">
-		<div class="text-center text-white border border-black bg-black" >
-			<button id="Title-Screen" on:click={clickHomePage}>HXH DLE</button>
-			<div class="fixed top-1/4 left-1/2 transform -translate-x-1/2">
-				<a href="/Classic">
-				<button class="border border-black text-white font-bold py-2 px-4 rounded">
-				  Classic Button
-				</button>
-				</a>
-			  </div>
-			
-			  
-		</div>
-		
+<main class="min-h-screen flex flex-col items-center bg-teal-600">
+	<!-- Top of the screen leading to home page -->
+	<div id="nav" class="w-full bg-gray-200 p-4 border-b-2 border-black text-center">
+		<button id="Title-Screen" class="text-3xl font-bold text-black" on:click={clickHomePage}>HXH DLE</button>
 	</div>
-	
+
+	<!-- Central content -->
+	<div class="flex flex-col items-center justify-center flex-grow">
+		<div class="my-8">
+			<a href="/Classic">
+				<button class="border border-black text-white font-bold py-2 px-4 rounded bg-gray-800 hover:bg-gray-700 transition-colors duration-200">
+					Classic Button
+				</button>
+			</a>
+		</div>
+	</div>
 </main>
 
-
-
-
-
-
-<style>
-#Title-Screen
-	{
-		font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-
+<style lang="postcss">
+	#Title-Screen {
+		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 	}
 </style>
-
