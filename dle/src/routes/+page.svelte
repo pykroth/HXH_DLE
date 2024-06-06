@@ -17,12 +17,46 @@
 			"link": "/Classic"
 		}
 	];
+
+	export let data;
+import {Auth} from '@supabase/auth-ui-svelte';
+import {ThemeSupa} from '@supabase/auth-ui-shared'
+    import { goto, invalidateAll } from '$app/navigation';
+
+let {supabase, session} = data
+$: ({supabase,session} = data)  
+
+// session is null, if session is null we have no user. if its not null, we have a user
+
+supabase.auth.onAuthStateChange(async(event, session)=> {
+	if(event==="SIGNED_IN")
+{
+	invalidateAll();
+}
+if(event==="SIGNED_OUT"){
+
+invalidateAll();
+}
+})
+
 </script>
 
 <main class="min-h-screen flex flex-col items-center bg-teal-600">
 	<!-- Top of the screen leading to home page -->
 	<div id="nav" class="w-full bg-gray-200 p-4 border-b-2 border-black text-center">
 		<button id="Title-Screen" class="text-3xl font-bold text-black" on:click={clickHomePage}>HXH DLE</button>
+		{#if session !=null}
+		
+		<button class="fixed right-11 border border-black bg-teal-600 font-bold py-2 px-4 rounded" on:click={async ()=> {await supabase.auth.signOut()}}>Logout</button>
+		{:else}
+		<a href="/Login"><button class="fixed right-11">Login</button></a>
+		{/if}
+		
+	</div>
+	<div>
+		{#if session !=null}
+		<span id="welcome"class="text-black tex-tlg">Welcome {session.user.email}</span>
+		{/if}
 	</div>
 
 	<!-- Central content -->
@@ -33,6 +67,7 @@
 					Classic Button
 				</button>
 			</a>
+			
 		</div>
 	</div>
 </main>
@@ -68,6 +103,10 @@
 
 	}
 	#classic{
+		animation:fade-up 2s;
+	}
+	#welcome{
+		font:bold;
 		animation:fade-up 2s;
 	}
 </style>
