@@ -325,8 +325,9 @@ function revealLocation()
 updateTable();
 
 </script>
-<main class="main min-h-screen bg-gray-100 text-gray-800">
-    <div id="fullpage" class="flex flex-col justify-center items-center h-screen w-full fixed bg-teal-600">
+
+<main class="main min-h-screen bg-gray-100 text-gray-800 relative">
+    <div id="fullpage" class="flex flex-col justify-center items-center h-screen w-full relative bg-teal-600">
         <div id="nav" class="text-center text-white bg-gray-200 p-4 w-full border-b-2 border-black">
             <a href="/">
                 <button id="Title-Screen" class="text-center text-2xl font-bold">HXH DLE</button>
@@ -340,12 +341,12 @@ updateTable();
         </div>
         <!--Code for guessing Right-->
         {#if guessedRight}
-        <div class="fixed top-16 left-1/2 transform -translate-x-1/2 bg-green-200 p-2 rounded">
+        <div class="relative top-16 left-1/2 transform -translate-x-1/2 bg-green-200 p-2 rounded">
             You Guessed Right
         </div>
         {/if}
         <!--Searchbar and list of results-->
-        <div class="fixed top-1/4 left-1/2 transform -translate-x-1/2 w-3/4">
+        <div class="absolute top-1/4 left-1/2 transform -translate-x-1/2 w-3/4">
             <input bind:value={searchText} type="text" id="searchInput" class="w-full px-4 py-2 text-black border border-gray-300 rounded focus:outline-none focus:border-blue-500" on:input={filterData}  style="pointer-events: {guessedRight ? 'none' : 'auto'}">
             {#if filterData.length > 0}
             <ul class="mt-2 bg-white border border-gray-300 rounded shadow-lg">
@@ -360,9 +361,9 @@ updateTable();
             {/if}
         </div>
     </div>  
-    <div class="fixed bottom-16 left-1/2 transform -translate-x-1/2 w-3/4">
-        {#each [...guessedData] as item, index}
-        <table class="w-full table-fixed mt-2">
+    <div class="relative bottom-16 left-1/2 transform -translate-x-1/2 w-3/4 overflow-y-auto">
+        {#each [...guessedData].reverse() as item, index}
+        <table class="w-full table-relative mt-2">
             <tr class="self-center" in:fade="{{ duration: 500, delay: (guessedData.length - index - 1) * 500 }}">
                 <td class="w-1/2 p-2 {item.correctName ? 'bg-green-200' : 'bg-red-300'}">{item.Name}</td>
                 <td class="w-1/2 p-2 {item.correctNen ? 'bg-green-200' : 'bg-red-300'}">{item.Nen}</td>
@@ -370,12 +371,13 @@ updateTable();
         </table>
         {/each}
     </div>
-    <footer class="bg-gray-800 text-white p-4 text-center text-xs">
-        <p>Jordan Pho</p>
-        <p>@2024</p>
-    </footer>
+    
+    
 </main>
-
+<footer class="bg-gray-800 text-white p-4 text-center text-xs">
+    <p>Jordan Pho</p>
+    <p>@2024</p>
+</footer>
 <style lang="postcss">
     :root {
         --scrollbar-width: 10px;
