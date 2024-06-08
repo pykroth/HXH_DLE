@@ -70,148 +70,7 @@ let guessCount = 0;
 let hintText="Debut Arc: 3 More Tries Necessary"
 
 let guessedRight = false;
-let data = [
-    {
-        Name: "Gon Freecs",
-        Click: false,
-        Nen: "Enhancer",
-        correctName: false,
-        correctNen: false,
-        DebutArc: "Hunter Exam"
 
-    },
-    {
-        Name: "Killua Zoldyc",
-        Click: false,
-        Nen: "Transmutor",
-        correctName: false,
-        correctNen: false,
-        DebutArc: "Hunter Exam"
-    },
-    {
-        Name: "Uvo",
-        Click: false,
-        Nen: "Enhancer",
-        correctName: false,
-        correctNen: false,
-        DebutArc: "Phantom Troupe Arc"
-    },
-    {
-        Name: "Kurapika Kurta",
-        Click: false,
-        Nen: "Conjuration, Special",
-        correctName: false,
-        correctNen: false,
-        DebutArc: "Hunter Exam"
-
-    },
-    {
-        Name: "Leorio",
-        Click: false,
-        Nen: "Emission",
-        correctName: false,
-        correctNen: false,
-        DebutArc: "Hunter Exam"
-    },
-    {
-        Name: "Netero",
-        Click: false,
-        Nen: "Emission",
-        correctName: false,
-        correctNen: false,
-        DebutArc: "Hunter Exam"
-    },
-    {
-        Name: "Hisoka",
-        Click: false,
-        Nen: "Transmutor",
-        correctName: false,
-        correctNen: false,
-        DebutArc: "Hunter Exam"
-    },
-    {
-        Name: "Illumi",
-        Click: false,
-        Nen: "Manipulator",
-        correctName: false,
-        correctNen: false,
-        DebutArc: "Hunter Exam"
-    },
-    {
-        Name: "Pokkle",
-        Click: false,
-        Nen: "Emission",
-        correctName: false,
-        correctNen: false,
-        DebutArc: "Hunter Exam"
-    },
-    {
-        Name: "Hanzo",
-        Click: false,
-        Nen: "Unknown",
-        correctName: false,
-        correctNen: false,
-        DebutArc: "Hunter Exam"
-    },
-    {
-        Name: "Ponzu",
-        Click: false,
-        Nen: "Manipulator",
-        correctName: false,
-        correctNen: false,
-        DebutArc: "Hunter Exam"
-    },
-    {
-        Name: "Mito",
-        Click: false,
-        Nen: "None",
-        correctName: false,
-        correctNen: false,
-        DebutArc: "Hunter Exam"
-    },
-    {
-        Name: "Meruem",
-        Click: false,
-        Nen: "Special",
-        correctName: false,
-        correctNen: false,
-        DebutArc: "Chimera Ant Arc"
-    },
-    {
-        Name: "Pitou",
-        Click: false,
-        Nen: "Special",
-        correctName: false,
-        correctNen: false,
-        DebutArc: "Chimera Ant Arc"
-    },
-    {
-        Name: "Shiapouf",
-        Click: false,
-        Nen: "Manipulator",
-        correctName: false,
-        correctNen: false,
-        DebutArc: "Chimera Ant Arc"
-    },
-    {
-        Name: "Menthuthuyoupi",
-        Click: false,
-        Nen: "Transmutor",
-        correctName: false,
-        correctNen: false,
-        DebutArc: "Chimera Ant Arc"
-    },
-    {
-        Name: "Kite",
-        Click: false,
-        Nen: "Conjuration",
-        correctName: false,
-        correctNen: false,
-        DebutArc: "Chimera Ant Arc"
-    }
-    
-
-];
 
 let filteredData: any[] = [];
 let guessedData: any[] = [];
@@ -226,11 +85,11 @@ function getRandomInt(min: number, max: number): number {
 function updateTable()
 {
     
-console.log(characterList.length)
+
     for(let i = 0; i<characterList.length; i++)
     {
 
-        console.log("Runs");
+        
     if(characterList[i].Name == answer[0].name)
     {
   
@@ -289,7 +148,7 @@ function Guess(result: any[])
     
     if(result.Name == answer[0].name)
     {
-        console.log("works")
+      
         guessedRight = true;
         clickSearch = false;
     }
@@ -316,9 +175,11 @@ function Guess(result: any[])
 
 function revealLocation()
 {
+    console.log(answer)
     if(3-guessCount <=0)
     {
-        hintText=answer[0].DebutArc;
+        hintText=answer[0].debut_arc;
+        
     }
 
 }
