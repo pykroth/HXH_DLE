@@ -2,7 +2,7 @@ name: Scheduled Task
 
 on:
   schedule:
-    - cron: '* * * * *'  # Schedule to run every minute
+    - cron: '* * * *'  # Schedule to run every minute
 
 jobs:
   run_task:
