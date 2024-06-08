@@ -135,7 +135,7 @@ function Guess(result: any[])
     result.Click=true;
     searchText='';
     guessCount++;
-    console.log(answer)
+   // console.log(answer)
    // guessedData.push(result);
     guessedData = [...guessedData, result];
     let hintCounter=3-guessCount;
@@ -176,7 +176,7 @@ function Guess(result: any[])
 
 function revealLocation()
 {
-    console.log(answer)
+   // console.log(answer)
     if(3-guessCount <=0)
     {
         hintText=answer[0].debut_arc;
@@ -186,9 +186,18 @@ function revealLocation()
 }
 updateTable();
 
+function scrollToSection(sectionId) {
+    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  $: if (guessedRight) {
+    // Using setTimeout to ensure the DOM updates before scrolling
+    setTimeout(() => scrollToSection('guessedRight'), 0);
+  }
+
 </script>
 
-<main class="main min-h-screen bg-gray-100 text-gray-800 relative">
+<main class="main min-h-screen bg-gray-100 text-gray-800 relative ">
     <div id="fullpage" class="flex flex-col justify-center items-center h-screen w-full relative bg-teal-600">
         <div id="nav" class="text-center text-white bg-gray-200 p-4 w-full border-b-2 border-black">
             <a href="/">
@@ -202,11 +211,7 @@ updateTable();
             </button>
         </div>
         <!--Code for guessing Right-->
-        {#if guessedRight}
-        <div class="fixed top-16 left-1/2 transform -translate-x-1/2 bg-green-200 p-2 rounded">
-            You Guessed Right
-        </div>
-        {/if}
+        
         <!--Searchbar and list of results-->
         <div class="absolute top-1/4 left-1/2 transform -translate-x-1/2 w-3/4">
             <input bind:value={searchText} type="text" id="searchInput" class="w-full px-4 py-2 text-black border border-gray-300 rounded focus:outline-none focus:border-blue-500" on:input={filterData}  style="pointer-events: {guessedRight ? 'none' : 'auto'}">
@@ -233,10 +238,20 @@ updateTable();
         </table>
         {/each}
     </div>
-    
+    <div>
+      {#if guessedRight}
+<div class="flex justify-center">
+  <div class="size-1/12 text-center bg-green-200 rounded -translate-y-1.5" id="guessedRight">
+    You Guessed Right
+  </div>
+</div>
+
+{/if}
+      
+    </div>
     
 </main>
-<footer class="bg-gray-800 text-white p-4 text-center text-xs">
+<footer class="bg-gray-800 text-white p-4 text-center text-xs" id="section-1">
     <p>Jordan Pho</p>
     <p>@2024</p>
 </footer>
