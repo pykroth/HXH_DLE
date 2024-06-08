@@ -3,13 +3,52 @@
 <script lang="ts">
     import { Result } from "postcss";
  import { fade } from 'svelte/transition';
-
+import { onMount } from "svelte";
+import { supabase } from "$lib/supabaseClient";
+import { getRandomCharacterAndUpdate } from "$lib/supabaseClient";
   // Function to determine if an item is newly added
   function isNewItem(index) {
     return index >= guessedData.length - 1;
   }
+  let characterList: any[]=[];
+  let loading = true;
+  let error = null;
 
+  onMount(async () => {
+    try {
+      const { data, error: fetchError } = await supabase
+        .from('Characters')
+        .select('*');
+
+      if (fetchError) {
+        error = 'Error fetching characters: ' + fetchError.message;
+      } else {
+        characterList = data;
+      }
+      updateTable();
+    } catch (err) {
+      error = 'Unexpected error: ' + err.message;
+    } finally {
+      loading = false;
+    }
+
+  });
+
+
+  
+  
 let answer;
+async function fetchRandomCharacter() {
+    try {
+        answer = await getRandomCharacterAndUpdate();
+        console.log('Random character:', answer);
+        updateTable();
+    } catch (error) {
+        console.error('Error fetching random character:', error.message);
+    }
+   
+}
+fetchRandomCharacter();
 let clickSearch = true;
 let searchText = '';
 let guessCount = 0;
@@ -170,17 +209,29 @@ function getRandomInt(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function pickChar()
+function updateTable()
 {
-    let answerNumber = getRandomInt(0,data.length-1);
-    answer = data[answerNumber];
     
+console.log(characterList.length)
+    for(let i = 0; i<characterList.length; i++)
+    {
 
+        console.log("Runs");
+    if(characterList[i].Name == answer.Name)
+    {
+  
+        characterList[i].correctName = true;
+    }
+    if(characterList[i].Nen == answer.Nen)
+    {
+        characterList[i].correctNen = true;
+    }
+}
 }
 
 function updateSearchResults(results: any[]) {
     filteredData = results;
-    const guessedResults = data.filter(item =>{return item.Click === true})
+    const guessedResults = characterList.filter(item =>{return item.Click === true})
     
   }
 
@@ -189,7 +240,7 @@ function updateSearchResults(results: any[]) {
   function filterData(event) {
     
     const query = event.target.value.toLowerCase();
-    const results = data.filter(item => {
+    const results = characterList.filter(item => {
         return item.Name.trim().toLowerCase().startsWith(query) && !item.Click;
     });
     
@@ -208,6 +259,7 @@ function updateSearchResults(results: any[]) {
 
 function Guess(result: any[])
 {
+    
     result.Click=true;
     searchText='';
     guessCount++;
@@ -220,18 +272,16 @@ function Guess(result: any[])
     {
         hintText="Debut Arc: (Click to use)"
     }
-    if(result.Click==true)
-    {
-        console.log("THIS IS TRUE");
-    }
+   
     
-    if(result == answer)
+    if(result.Name == answer.Name)
     {
+        console.log("works")
         guessedRight = true;
         clickSearch = false;
     }
     const query = event.target.value.toLowerCase();
-    const results = data.filter(item => {
+    const results = characterList.filter(item => {
         return item.Name.toLowerCase().includes(query) && (item.Click === false);
     });
    
@@ -248,19 +298,10 @@ function Guess(result: any[])
    
    
 }
-pickChar();
 
-for(let i = 0; i<data.length; i++)
-{
-    if(data[i].Name == answer.Name)
-    {
-        data[i].correctName = true;
-    }
-    if(data[i].Nen == answer.Nen)
-    {
-        data[i].correctNen = true;
-    }
-}
+console.log(answer)
+
+
 
 function revealLocation()
 {
@@ -270,9 +311,8 @@ function revealLocation()
     }
 
 }
+updateTable();
 
-
- 
 </script>
 <main class="main min-h-screen bg-gray-100 text-gray-800">
     <div id="fullpage" class="flex flex-col justify-center items-center h-screen w-full fixed bg-teal-600">

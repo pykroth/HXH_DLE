@@ -1,5 +1,6 @@
 <script lang="ts">
 	import './styles.css';
+	
 	let tempVar = false;
 	function clickHomePage() {
 		tempVar = true;
@@ -39,6 +40,12 @@ invalidateAll();
 }
 })
 
+export async function load() {
+  const { data } = await supabase.from("Characters").select();
+  return {
+    countries: data ?? [],
+  };
+}
 </script>
 
 <main class="min-h-screen flex flex-col items-center bg-teal-600">
@@ -49,7 +56,7 @@ invalidateAll();
 		
 		<button class="fixed right-11 border border-black bg-teal-600 font-bold py-2 px-4 rounded" on:click={async ()=> {await supabase.auth.signOut()}}>Logout</button>
 		{:else}
-		<a href="/Login"><button class="fixed right-11">Login</button></a>
+		<a href="/Login"><button class="fixed right-11 border border-black bg-teal-600 font-bold py-2 px-4 rounded">Login</button></a>
 		{/if}
 		
 	</div>
@@ -70,6 +77,7 @@ invalidateAll();
 			
 		</div>
 	</div>
+	
 </main>
 
 <style lang="postcss">
