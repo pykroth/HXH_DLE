@@ -1,0 +1,16 @@
+name: Scheduled Task
+
+on:
+  schedule:
+    - cron: '* * * * *'  # Schedule to run every minute
+
+jobs:
+  run_task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Run Supabase task
+        run: |
+          psql -h aws-0-us-east-1.pooler.supabase.com -U postgres.dopofnytytsgahadafvm -d postgres -c 'SELECT pick_random_character();'
