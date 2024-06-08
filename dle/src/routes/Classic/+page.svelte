@@ -5,7 +5,7 @@
  import { fade } from 'svelte/transition';
 import { onMount } from "svelte";
 import { supabase } from "$lib/supabaseClient";
-import { getRandomCharacterAndUpdate } from "$lib/supabaseClient";
+
   // Function to determine if an item is newly added
   function isNewItem(index) {
     return index >= guessedData.length - 1;
@@ -13,6 +13,9 @@ import { getRandomCharacterAndUpdate } from "$lib/supabaseClient";
   let characterList: any[]=[];
   let loading = true;
   let error = null;
+  let answer:any[];
+  let error2=null;
+  let loading2 = true;
 
   onMount(async () => {
     try {
@@ -33,22 +36,33 @@ import { getRandomCharacterAndUpdate } from "$lib/supabaseClient";
     }
 
   });
+  let temp;
 
-
-  
-  
-let answer;
-async function fetchRandomCharacter() {
+  onMount(async () => {
     try {
-        answer = await getRandomCharacterAndUpdate();
-        console.log('Random character:', answer);
-        updateTable();
-    } catch (error) {
-        console.error('Error fetching random character:', error.message);
+      const { data, error: fetchError } = await supabase
+        .from('current_random_character')
+        .select('*');
+
+      if (fetchError) {
+        error2 = 'Error fetching characters: ' + fetchError.message;
+      } else {
+        answer = data;
+      }
+      updateTable();
+    } catch (err) {
+      error2 = 'Unexpected error: ' + err.message;
+    } finally {
+      loading2 = false;
     }
-   
-}
-fetchRandomCharacter();
+  });
+
+
+
+  
+  
+
+
 let clickSearch = true;
 let searchText = '';
 let guessCount = 0;
@@ -217,12 +231,12 @@ console.log(characterList.length)
     {
 
         console.log("Runs");
-    if(characterList[i].Name == answer.Name)
+    if(characterList[i].Name == answer[0].name)
     {
   
         characterList[i].correctName = true;
     }
-    if(characterList[i].Nen == answer.Nen)
+    if(characterList[i].Nen == answer[0].nen)
     {
         characterList[i].correctNen = true;
     }
@@ -259,7 +273,6 @@ function updateSearchResults(results: any[]) {
 
 function Guess(result: any[])
 {
-    
     result.Click=true;
     searchText='';
     guessCount++;
@@ -274,7 +287,7 @@ function Guess(result: any[])
     }
    
     
-    if(result.Name == answer.Name)
+    if(result.Name == answer[0].name)
     {
         console.log("works")
         guessedRight = true;
@@ -299,15 +312,13 @@ function Guess(result: any[])
    
 }
 
-console.log(answer)
-
 
 
 function revealLocation()
 {
     if(3-guessCount <=0)
     {
-        hintText=answer.DebutArc;
+        hintText=answer[0].DebutArc;
     }
 
 }
@@ -335,7 +346,7 @@ updateTable();
         {/if}
         <!--Searchbar and list of results-->
         <div class="fixed top-1/4 left-1/2 transform -translate-x-1/2 w-3/4">
-            <input bind:value={searchText} type="text" id="searchInput" class="w-full px-4 py-2 text-black border border-gray-300 rounded focus:outline-none focus:border-blue-500" on:input={filterData}>
+            <input bind:value={searchText} type="text" id="searchInput" class="w-full px-4 py-2 text-black border border-gray-300 rounded focus:outline-none focus:border-blue-500" on:input={filterData}  style="pointer-events: {guessedRight ? 'none' : 'auto'}">
             {#if filterData.length > 0}
             <ul class="mt-2 bg-white border border-gray-300 rounded shadow-lg">
                 {#each filteredData as item}
