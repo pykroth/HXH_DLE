@@ -36,8 +36,8 @@ import { supabase } from "$lib/supabaseClient";
     }
 
   });
-  let temp;
-
+  
+  
   onMount(async () => {
     try {
       const { data, error: fetchError } = await supabase
@@ -135,6 +135,7 @@ function Guess(result: any[])
     result.Click=true;
     searchText='';
     guessCount++;
+    console.log(answer)
    // guessedData.push(result);
     guessedData = [...guessedData, result];
     let hintCounter=3-guessCount;
@@ -202,7 +203,7 @@ updateTable();
         </div>
         <!--Code for guessing Right-->
         {#if guessedRight}
-        <div class="relative top-16 left-1/2 transform -translate-x-1/2 bg-green-200 p-2 rounded">
+        <div class="fixed top-16 left-1/2 transform -translate-x-1/2 bg-green-200 p-2 rounded">
             You Guessed Right
         </div>
         {/if}
