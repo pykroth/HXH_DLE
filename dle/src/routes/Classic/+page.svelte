@@ -5,6 +5,7 @@
  import { fade } from 'svelte/transition';
 import { onMount } from "svelte";
 import { supabase } from "$lib/supabaseClient";
+import guessedRightImage1 from "../../assets/hxhgif.gif"
 
   // Function to determine if an item is newly added
   function isNewItem(index) {
@@ -187,7 +188,7 @@ function revealLocation()
 updateTable();
 
 function scrollToSection(sectionId) {
-    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   $: if (guessedRight) {
@@ -216,10 +217,10 @@ function scrollToSection(sectionId) {
         <div class="absolute top-1/4 left-1/2 transform -translate-x-1/2 w-3/4">
             <input bind:value={searchText} type="text" id="searchInput" class="w-full px-4 py-2 text-black border border-gray-300 rounded focus:outline-none focus:border-blue-500" on:input={filterData}  style="pointer-events: {guessedRight ? 'none' : 'auto'}">
             {#if filterData.length > 0}
-            <ul class="mt-2 bg-white border border-gray-300 rounded shadow-lg">
+            <ul class="mt-2 bg-white border border-gray-300 rounded shadow-lg ">
                 {#each filteredData as item}
                 <li>
-                    <button class="w-full text-left px-4 py-2 border-b border-gray-200 hover:bg-gray-100 transition-colors duration-200" on:click={() => Guess(item)}>
+                    <button class="w-full text-left px-4 py-2 border-b border-gray-200 hover:bg-gray-100 transition-colors duration-200" on:click={() => Guess(item)} >
                         {item.Name}
                     </button>
                 </li>
@@ -228,7 +229,7 @@ function scrollToSection(sectionId) {
             {/if}
         </div>
     </div>  
-    <div class="relative bottom-16 left-1/2 transform -translate-x-1/2 w-3/4 overflow-y-auto">
+    <div class="relative top-[-250px] left-1/2 transform -translate-x-1/2 w-3/4 overflow-y-auto">
         {#each [...guessedData].reverse() as item, index}
         <table class="w-full table-relative mt-2">
             <tr class="self-center" in:fade="{{ duration: 500, delay: (guessedData.length - index - 1) * 500 }}">
@@ -242,7 +243,9 @@ function scrollToSection(sectionId) {
       {#if guessedRight}
 <div class="flex justify-center">
   <div class="size-1/12 text-center bg-green-200 rounded -translate-y-1.5" id="guessedRight">
+    <img src={guessedRightImage1} alt="image1" class="p-2">
     You Guessed Right
+  
   </div>
 </div>
 
