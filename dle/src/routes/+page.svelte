@@ -2,6 +2,9 @@
 	import './styles.css';
 	import backgroundImage from "../assets/hxhtemp.png";
 	import { goto, invalidateAll } from '$app/navigation'; // Ensure goto function is correctly imported
+	import {UserPlusIcon} from 'svelte-feather-icons'
+	import {UserCheckIcon} from 'svelte-feather-icons'
+	
   
 	let tempVar = false;
   
@@ -54,15 +57,18 @@
 	<div style="background-image: url({backgroundImage});" class="absolute inset-0 bg-cover bg-center">
 		
 	  <div class="absolute inset-0 bg-black opacity-70"></div> <!-- Overlay to darken -->
-  
+
 	  <!-- Top navigation -->
 	  <div class="flex justify-center items-center h-20 md:h-16 sm:h-12">
-		<button id="Title-Screen" class=" fixed text-3xl md:text-2xl sm:text-xl font-bold text-white" on:click={clickHomePage}>HXH DLE</button>
-		{#if session != null}
-		<button class="fixed right-4 md:right-8 sm:right-6 border border-black bg-teal-600 font-bold py-2 px-4 rounded" on:click={async () => { await supabase.auth.signOut() }}>Logout</button>
-		{:else}
-		<a href="/Login" class="fixed right-4 md:right-8 sm:right-6"><button class="border border-black bg-black text-white font-bold py-2 px-4 rounded">Login</button></a>
-		{/if}
+		
+		
+		<button id="Title-Screen" class=" z-10 fixed text-3xl md:text-2xl sm:text-xl font-bold text-white" on:click={clickHomePage}>HXH DLE
+			{#if session != null}
+			<button class="fixed mr-auto ml-auto px-2" on:click={async () => { await supabase.auth.signOut() }}>	<UserCheckIcon class="text-white" strokeWidth="2" size="32" ></UserCheckIcon></button>
+			{:else}
+			<a href="/Login" class="fixed mr-auto ml-auto px-2 ">  	<UserPlusIcon class="text-white" strokeWidth="2" size="32" ></UserPlusIcon></a>
+			{/if}</button>
+		
 	  </div>
   
 	  <div class="flex flex-col items-center justify-center">
