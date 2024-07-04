@@ -59,19 +59,27 @@
 	  <div class="absolute inset-0 bg-black opacity-70"></div> <!-- Overlay to darken -->
 
 	  <!-- Top navigation -->
-	  <div class="flex justify-center items-center h-20 md:h-16 sm:h-12">
-	
-		<button  class="fixed pr-36 z-20"><InfoIcon size="24" class="text-white "></InfoIcon></button>
-		<button id="Title-Screen" class=" z-10 fixed text-3xl md:text-2xl sm:text-xl font-bold text-white" on:click={clickHomePage}>HXH DLE
-			{#if session != null}
-			<button class="fixed mr-auto ml-auto px-2" on:click={async () => { await supabase.auth.signOut() }}>	<UserCheckIcon class="text-white" strokeWidth="2" size="32" ></UserCheckIcon></button>
-			{:else}
-			<a href="/Login" class="fixed mr-auto ml-auto px-2 ">  	<UserPlusIcon class="text-white" strokeWidth="2" size="32" ></UserPlusIcon></a>
-			{/if}
+	  <div class="flex justify-center items-center h-20 md:h-16 sm:h-12 space-x-4">
+		<button class="z-20">
+			<InfoIcon size="24" class="text-white"></InfoIcon>
 		</button>
 		
-	  </div>
-  
+		<button id="Title-Screen" class="z-10 text-3xl md:text-2xl sm:text-xl font-bold text-white" on:click={clickHomePage}>
+			HXH DLE
+		</button>
+		
+		{#if session != null}
+			<button class="z-20" on:click={async () => { await supabase.auth.signOut() }}>
+				<UserCheckIcon class="text-white" strokeWidth="2" size="32"></UserCheckIcon>
+			</button>
+		{:else}
+			<a href="/Login" class="z-20">
+				<UserPlusIcon class="text-white" strokeWidth="2" size="32"></UserPlusIcon>
+			</a>
+		{/if}
+	</div>
+	
+	
 	  <div class="flex flex-col items-center justify-center">
 		<div class="fixed my-8 mx-40">
 			
