@@ -4,10 +4,10 @@
 	import { goto, invalidateAll } from '$app/navigation'; // Ensure goto function is correctly imported
 	import {InfoIcon, UserPlusIcon} from 'svelte-feather-icons'
 	import {UserCheckIcon} from 'svelte-feather-icons'
-	
+	import Modal from './Modal.svelte';
 	let showSettings
 	let tempVar = false;
-  
+	let showModal = false;
 	function clickHomePage() {
 	  tempVar = true;
 	  console.log(tempVar);
@@ -61,7 +61,7 @@
 	<!-- Top navigation -->
 <div class="flex justify-center items-center h-20 md:h-16 sm:h-12 gap-x-2">
 	<div class="flex items-center">
-	  <button class="z-20">
+	  <button class="z-20"  on:click={() => (showModal = true)}>
 		<InfoIcon size="24" class="text-white"></InfoIcon>
 	  </button>
 	</div>
@@ -81,12 +81,37 @@
 		</a>
 	  {/if}
 	</div>
+	
   </div>
-  
+
+
+<Modal bind:showModal>
+	<h2 slot="header">
+		modal
+		<small><em>adjective</em> mod·al \ˈmō-dəl\</small>
+	</h2>
+
+	<ol class="definition-list">
+		<li>of or relating to modality in logic</li>
+		<li>
+			containing provisions as to the mode of procedure or the manner of taking effect —used of a
+			contract or legacy
+		</li>
+		<li>of or relating to a musical mode</li>
+		<li>of or relating to structure as opposed to substance</li>
+		<li>
+			of, relating to, or constituting a grammatical form or category characteristically indicating
+			predication
+		</li>
+		<li>of or relating to a statistical mode</li>
+	</ol>
+
+	<a href="https://www.merriam-webster.com/dictionary/modal">merriam-webster.com</a>
+</Modal>
+
 	
 	  <div class="flex flex-col items-center justify-center">
 		<div class="fixed my-8 mx-40">
-			
 
 		  <button id="classic" class=" w-60 justify-center border text-white font-bold py-2 px-4 rounded bg-black hover:bg-gray-700 text-lg mt-40" on:click={() => goto('/Classic')}>
 			Classic
