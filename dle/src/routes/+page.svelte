@@ -5,7 +5,7 @@
 	import {InfoIcon, UserPlusIcon} from 'svelte-feather-icons'
 	import {UserCheckIcon} from 'svelte-feather-icons'
 	import Modal from './Modal.svelte';
-	let showSettings
+
 	let tempVar = false;
 	let showModal = false;
 	function clickHomePage() {
@@ -86,27 +86,17 @@
 
 
 <Modal bind:showModal>
-	<h2 slot="header">
-		modal
-		<small><em>adjective</em> mod·al \ˈmō-dəl\</small>
+	
+	<h2 slot="header" class="font-bold text-xl">
+		About
+		
 	</h2>
 
-	<ol class="definition-list">
-		<li>of or relating to modality in logic</li>
-		<li>
-			containing provisions as to the mode of procedure or the manner of taking effect —used of a
-			contract or legacy
-		</li>
-		<li>of or relating to a musical mode</li>
-		<li>of or relating to structure as opposed to substance</li>
-		<li>
-			of, relating to, or constituting a grammatical form or category characteristically indicating
-			predication
-		</li>
-		<li>of or relating to a statistical mode</li>
+	<ol>
+		<li>HXH DLE is a guessing game inspired by the other DLE games from Pimeko. Every day, you can guess a different character from the manga/anime Hunter x Hunter (resets at 7:00 PM CST).</li>
 	</ol>
 
-	<a href="https://www.merriam-webster.com/dictionary/modal">merriam-webster.com</a>
+	
 </Modal>
 
 	
@@ -138,16 +128,7 @@
 	  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 	}
   
-	@keyframes fade-up {
-	  0% {
-		opacity: 0;
-		transform: translateY(30px) scale(.9);
-	  }
-	  100% {
-		opacity: 1;
-		transform: translateY(0px) scale(1);
-	  }
-	}
+	
   
 	@keyframes fade-up {
 	  0% {

@@ -4,6 +4,16 @@
 	let dialog; // HTMLDialogElement
 
 	$: if (dialog && showModal) dialog.showModal();
+    function fadeSlide(node, options) {
+		const slideTrans = slide(node, options)
+		return {
+			duration: options.duration,
+			css: t => `
+				${slideTrans.css(t)}
+				opacity: ${t};
+			`
+		};
+	}
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
@@ -19,16 +29,19 @@
 		<slot />
 		<hr />
 		<!-- svelte-ignore a11y-autofocus -->
-		<button autofocus on:click={() => dialog.close()}>close modal</button>
 	</div>
 </dialog>
 
 <style>
 	dialog {
-		max-width: 32em;
+		max-width: 24em;
 		border-radius: 0.2em;
 		border: none;
 		padding: 0;
+		transform: translateY(-100%);
+		opacity: 0;
+		transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease-out;
+        
 	}
 	dialog::backdrop {
 		background: rgba(0, 0, 0, 0.3);
@@ -37,18 +50,13 @@
 		padding: 1em;
 	}
 	dialog[open] {
-		animation: zoom 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-	}
-	@keyframes zoom {
-		from {
-			transform: scale(0.95);
-		}
-		to {
-			transform: scale(1);
-		}
-	}
+  transform: translateY(0);
+  opacity: 1;
+  animation: fadeSlide(1000ms); /* Added closing parenthesis here */
+}
+
 	dialog[open]::backdrop {
-		animation: fade 0.2s ease-out;
+		animation: fade 1s ease-out;
 	}
 	@keyframes fade {
 		from {
