@@ -2,10 +2,10 @@
 	import './styles.css';
 	import backgroundImage from "../assets/hxhtemp.png";
 	import { goto, invalidateAll } from '$app/navigation'; // Ensure goto function is correctly imported
-	import {UserPlusIcon} from 'svelte-feather-icons'
+	import {InfoIcon, UserPlusIcon} from 'svelte-feather-icons'
 	import {UserCheckIcon} from 'svelte-feather-icons'
 	
-  
+	let showSettings
 	let tempVar = false;
   
 	function clickHomePage() {
@@ -60,14 +60,15 @@
 
 	  <!-- Top navigation -->
 	  <div class="flex justify-center items-center h-20 md:h-16 sm:h-12">
-		
-		
+	
+		<button  class="fixed pr-36 z-20"><InfoIcon size="24" class="text-white "></InfoIcon></button>
 		<button id="Title-Screen" class=" z-10 fixed text-3xl md:text-2xl sm:text-xl font-bold text-white" on:click={clickHomePage}>HXH DLE
 			{#if session != null}
 			<button class="fixed mr-auto ml-auto px-2" on:click={async () => { await supabase.auth.signOut() }}>	<UserCheckIcon class="text-white" strokeWidth="2" size="32" ></UserCheckIcon></button>
 			{:else}
 			<a href="/Login" class="fixed mr-auto ml-auto px-2 ">  	<UserPlusIcon class="text-white" strokeWidth="2" size="32" ></UserPlusIcon></a>
-			{/if}</button>
+			{/if}
+		</button>
 		
 	  </div>
   
@@ -77,7 +78,7 @@
 
 		  <button id="classic" class="justify-center border text-white font-bold py-2 px-4 rounded bg-black hover:bg-gray-700 text-lg mt-40" on:click={() => goto('/Classic')}>
 			Classic
-			<div><p class="text-xs">Guess hints on every try</p></div>
+			<div><p class="text-xs">Get hints on every try</p></div>
 		  </button>
 		 
 		</div>
