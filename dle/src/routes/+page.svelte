@@ -58,33 +58,37 @@
 		
 	  <div class="absolute inset-0 bg-black opacity-70"></div> <!-- Overlay to darken -->
 
-	  <!-- Top navigation -->
-	  <div class="flex justify-center items-center h-20 md:h-16 sm:h-12 space-x-4">
-		<button class="z-20">
-			<InfoIcon size="24" class="text-white"></InfoIcon>
-		</button>
-		
-		<button id="Title-Screen" class="z-10 text-3xl md:text-2xl sm:text-xl font-bold text-white" on:click={clickHomePage}>
-			HXH DLE
-		</button>
-		
-		{#if session != null}
-			<button class="z-20" on:click={async () => { await supabase.auth.signOut() }}>
-				<UserCheckIcon class="text-white" strokeWidth="2" size="32"></UserCheckIcon>
-			</button>
-		{:else}
-			<a href="/Login" class="z-20">
-				<UserPlusIcon class="text-white" strokeWidth="2" size="32"></UserPlusIcon>
-			</a>
-		{/if}
+	<!-- Top navigation -->
+<div class="flex justify-center items-center h-20 md:h-16 sm:h-12 gap-x-2">
+	<div class="flex items-center">
+	  <button class="z-20">
+		<InfoIcon size="24" class="text-white"></InfoIcon>
+	  </button>
 	</div>
 	
+	<button id="Title-Screen" class="z-10 text-3xl md:text-2xl sm:text-xl font-bold text-white" on:click={clickHomePage}>
+	  HXH DLE
+	</button>
+	
+	<div class="flex items-center">
+	  {#if session != null}
+		<button class="z-20" on:click={async () => { await supabase.auth.signOut() }}>
+		  <UserCheckIcon class="text-white" strokeWidth="2" size="32"></UserCheckIcon>
+		</button>
+	  {:else}
+		<a href="/Login" class="z-20">
+		  <UserPlusIcon class="text-white" strokeWidth="2" size="32"></UserPlusIcon>
+		</a>
+	  {/if}
+	</div>
+  </div>
+  
 	
 	  <div class="flex flex-col items-center justify-center">
 		<div class="fixed my-8 mx-40">
 			
 
-		  <button id="classic" class="justify-center border text-white font-bold py-2 px-4 rounded bg-black hover:bg-gray-700 text-lg mt-40" on:click={() => goto('/Classic')}>
+		  <button id="classic" class=" w-60 justify-center border text-white font-bold py-2 px-4 rounded bg-black hover:bg-gray-700 text-lg mt-40" on:click={() => goto('/Classic')}>
 			Classic
 			<div><p class="text-xs">Get hints on every try</p></div>
 		  </button>
