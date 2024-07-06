@@ -6,6 +6,10 @@
 import { onMount } from "svelte";
 import { supabase } from "$lib/supabaseClient";
 import guessedRightImage1 from "../../assets/hxhgif.gif"
+import {InfoIcon, UserPlusIcon} from 'svelte-feather-icons'
+	import {UserCheckIcon} from 'svelte-feather-icons'
+  import { goto, invalidateAll } from '$app/navigation'; 
+	import backgroundImage from "$src/assets/hxhtemp.png"
 
   // Function to determine if an item is newly added
   function isNewItem(index) {
@@ -17,6 +21,7 @@ import guessedRightImage1 from "../../assets/hxhgif.gif"
   let answer:any[];
   let error2=null;
   let loading2 = true;
+  
 
   onMount(async () => {
     try {
@@ -196,21 +201,32 @@ function scrollToSection(sectionId) {
     setTimeout(() => scrollToSection('guessedRight'), 0);
   }
 
-</script>
 
-<main class="main min-h-screen bg-gray-100 text-gray-800 relative ">
-    <div id="fullpage" class="flex flex-col justify-center items-center h-screen w-full relative bg-teal-600">
-        <div id="nav" class="text-center text-white bg-gray-200 p-4 w-full border-b-2 border-black">
-            <a href="/">
-                <button id="Title-Screen" class="text-center text-2xl font-bold">HXH DLE</button>
-            </a>
+
+</script>
+<div class="min-h-screen relative">
+	<!-- Background image with overlay -->
+	 
+	<div style="background-image: url({backgroundImage});" class="absolute inset-0 bg-cover bg-center">
+		
+	  <div class="absolute inset-0 bg-black opacity-70"></div> <!-- Overlay to darken -->
+
+	<!-- Top navigation -->
+<div class="flex justify-center items-center h-20 md:h-16 sm:h-12 gap-x-2">
+	<div class="flex items-center">
+	  <button class="z-20"  >	<InfoIcon size="24" class="text-white"></InfoIcon>
+	  </button>
+	</div>
+	
+	<button id="Title-Screen" class="z-10 text-3xl md:text-2xl sm:text-xl font-bold text-white" on:click={() => goto('/')}>
+	  HXH DLE
+	</button>
+	
+  </div>
+
+
         </div>
-        <!--Hints-->
-        <div class="flex justify-center mt-8">
-            <button class="border border-black px-4 py-2 bg-white hover:bg-gray-200 transition-colors duration-200" on:click={revealLocation}>
-                {hintText}
-            </button>
-        </div>
+
         <!--Code for guessing Right-->
         
         <!--Searchbar and list of results-->
@@ -251,13 +267,15 @@ function scrollToSection(sectionId) {
 
 {/if}
       
-    </div>
+   
     
-</main>
-<footer class="bg-gray-800 text-white p-4 text-center text-xs" id="section-1">
-    <p>Jordan Pho</p>
-    <p>@2024</p>
-</footer>
+
+ <!-- Footer -->
+ <footer class="absolute bottom-0 left-0 right-0 p-2 text-center text-xs text-gray-600">
+  <p>Pykroth</p >
+  <p>@2024</p>
+  </footer>
+</div>
 <style lang="postcss">
     :root {
         --scrollbar-width: 10px;

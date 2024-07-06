@@ -114,7 +114,7 @@
 	  
 	  
 	  <!-- Footer -->
-	  <footer class="absolute bottom-0 left-0 right-0 p-2 text-center text-xs text-gray-600">
+	  <footer class="z-10 absolute bottom-0 left-0 right-0 p-2 text-center text-xs text-white">
 		<p>Pykroth</p >
 		<p>@2024</p>
 	  </footer>
